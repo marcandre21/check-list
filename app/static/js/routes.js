@@ -27,6 +27,7 @@ ChecklistApp.config(function($routeProvider) {
 		/*- cleaner views ----------------------------------------------*/
 		.when('/', {
 			templateUrl: '/static/html/partials/index.html',
+			controller: IndexCntl,
 		})
 		.when('/new', {
 			templateUrl: '/static/html/partials/new.html',

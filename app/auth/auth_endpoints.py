@@ -90,6 +90,9 @@ def POST_reset_password():
 
 @bp.route('/user', methods=['GET'])
 def GET_user():
+	u = get_user()
+	print '****************'
+	print u
 	return dumpJSON(get_user())
 
 @bp.route('/logout', methods=['POST'])

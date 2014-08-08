@@ -77,6 +77,22 @@ function MainCntl($scope, $window, $location, APIservice, UserFactory, Translate
 	init();
 }
 
+function IndexCntl($scope, $location) {
+
+	var ath; // addToHomeScreen instance
+	
+	var init = function() {
+		ath = addToHomescreen({ 
+			debug: true,
+			lifespan: 1000,
+			maxDisplayCount: 1, // set to 0 for unlimited
+		});
+		// for debugging
+		addToHomescreen.removeSession();
+	}
+	init();
+}
+
 
 function NewCntl($scope, $location, APIservice) {
 

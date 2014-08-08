@@ -3,31 +3,60 @@
 <head>
     <base href="/">
     <meta charset="utf-8">
-    <title>Neat Streak | Significance Labs</title>
+    <title>Neat Streak</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="description" content="TODO">
     <meta name="author" content="Alexandra Berke at Significance Labs">
     <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+    
     <!-- stylesheets -->
     <link href="/static/css/base.css" rel="stylesheet">
     <link href="/static/css/list.css" rel="stylesheet">
     <link href="/static/css/sign-in.css" rel="stylesheet">
+    <!-- stylesheets -->
 
 
-    <!-- javascript -->
+    <!-- Add to home screen **********************************************************
+    User prompted to add to home screen with the addtohomescreen script.  
+    See function call in IndexCntl -->
+
+    <!-- Run in full-screen mode. -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes"> <!-- for chrome on android -->
+
+    <!-- Make the status bar black with white text. -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+    <script src="/static/vendor/addtohomescreen/addtohomescreen.js"></script>
+    <link href="/static/vendor/addtohomescreen/addtohomescreen.css" rel="stylesheet">
+
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/static/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/static/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/static/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/static/favicon.ico" />
+
+    <link rel="apple-touch-startup-image" href="/static/icon/neatstreak_placeholder.png">
+
+    <meta name="apple-mobile-web-app-title" content="NeatStreak">
+    <!-- ********************************************************** Add to home screen -->
+
+
+    <!-- AngularJS -->
 <!--     
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.js"></script>
      -->
      
-     <script src="/static/js/vendor/angular.min.js"></script>
-     <script src="/static/js/vendor/angular-route.min.js"></script>
+     <script src="/static/vendor/angular.min.js"></script>
+     <script src="/static/vendor/angular-route.min.js"></script>
+    <!-- AngularJS -->
 
-     <!-- cannot load as an external script because it tries to write to file -->
-     
-     <!--  -->
+
+     <!-- Google Maps - cannot load as an external script because it tries to write to file -->
      <script type="text/javascript"
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJxQK1oDn4U3kbDIK-epf96ckze7fuSHQ"></script>
+      <!-- Google Maps -->
+
 
     <!-- translation module -->
     <script src="/language/static/translateModule/module.js"></script>
@@ -53,6 +82,7 @@
     <!-- Keep it as script (rather than loading from translate module) so that can ensure loaded in before page renders -->
     <script src="/language/map?callback=translateMapCallback"></script>
     <script src="/language/setting?callback=languageSettingCallback"></script>
+    <!-- translation module -->
     
 
     <script src="/static/js/app.js"></script>
@@ -63,13 +93,15 @@
     <script src="/static/js/routes.js"></script>
 
 
-    <!-- using fastclick.js to prevent delay on mobile browsers -->
-    <script type='application/javascript' src="/static/js/vendor/fastclick.js"></script>
+    <!-- fastclick.js - to prevent delay on mobile browsers -->
+    <script type='application/javascript' src="/static/vendor/fastclick.js"></script>
     <script>
         window.addEventListener('load', function() {
             FastClick.attach(document.body);
         }, false);
     </script>
+    <!-- fastclick -->
+
 
     <!-- google analytics - pushed to on route change from MainCntl -->
     <script>

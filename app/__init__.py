@@ -12,7 +12,7 @@
 #*********************************************************************************
 
 
-from flask import Flask, send_file, redirect
+from flask import Flask, send_file, redirect, request, session
 from flask.ext.compress import Compress
 
 import auth
@@ -55,6 +55,10 @@ def no_user_views():
 	"""
 	Redirect to '/dashboard' if user is signed in 
 	"""
+	print('no_user_views')
+	print '************************'
+	print request
+	print session
 	if auth.get_user():
 		return redirect('/dashboard')
 	return base()
@@ -67,6 +71,10 @@ def user_views(id=None):
 	""" 
 	Redirect to '/' if no user signed in
 	"""
+	print 'user views ************************'
+	print request
+	print 'cookie',request.cookies
+	print session
 	if not auth.get_user():
 		return redirect('/')
 	return base()
