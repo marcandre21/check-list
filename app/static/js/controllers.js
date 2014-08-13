@@ -116,6 +116,7 @@ function NewCntl($scope, $location, APIservice) {
 		// ensure phonenumber and name entered
 		$scope.error.name 			= $scope.cleaner.name ? false : true;
 		$scope.error.phonenumber 	= $scope.cleaner.phonenumber ? false : true;
+		
 		if ($scope.error.name || $scope.error.phonenumber) {
 			$scope.waiting = false;
 			return;
@@ -149,7 +150,7 @@ function NewCntl($scope, $location, APIservice) {
 			$scope.error.message = 'INVALID_PASSWORD_CONFIRM_ERROR';
 			$scope.error.confirmPassword = true;
 		}
-		if ($scope.error.phonenumber||$scope.error.password||$scope.error.confirmPassword) {
+		if ($scope.error.password||$scope.error.confirmPassword) {
 			console.log('error', $scope.error)
 			return false;
 		}
@@ -327,6 +328,7 @@ function ListCntl($scope, $window, APIservice, TranslateService, TaskFactory, Ge
 			$scope.editingListInfo = true;
 		}
 		var successCallback = function(data) {
+			console.log('successCallback', data)
 			$scope.list._id = ($scope.list._id || data._id);
 		}
 		APIservice.PUT('/api/list/' + $scope.list._id, $scope.list).then(successCallback, errorCallback);
@@ -460,6 +462,7 @@ function ListCntl($scope, $window, APIservice, TranslateService, TaskFactory, Ge
 		var successCallback = function(data) {
 			$scope.editingListInfo = false;
 			$scope.sendStatus = 'sent';
+			console.log(data); // for demoing - want id of receipt
 		}
 		var errorCallback = function(message) {
 			$scope.editingListInfo = true;
@@ -512,23 +515,17 @@ function ListCntl($scope, $window, APIservice, TranslateService, TaskFactory, Ge
 		$scope.today = new Date(); // for cleaning log title
 
 
-		/* backwards compatibility:
-			phonenumbers stored as strings need be converted to integers
-		*/
-		if ($scope.list.phonenumber) {
-			$scope.list.phonenumber = Number($scope.list.phonenumber);
-		}
-
 		console.log('list', $scope.list)
 	}
 	init();
 }
 
-function ReceiptCntl($scope, $location, UtilityService, APIservice, receipt) {
+function ReceiptCntl($scope, $location, UtilityService, APIservice, TranslateService, receipt) {
 	$scope.cleaner;
 	$scope.list; // for now receipt mimicing list
 	$scope.feedback;
 	$scope.feedback_sent;
+	var feedbackPrefix = (TranslateService.translate('FEEDBACK PREFIX') + " ");
 
 	$scope.viewAgreement = function() {
 		$location.path('/list/' + receipt._list + '/agreement');
@@ -536,6 +533,11 @@ function ReceiptCntl($scope, $location, UtilityService, APIservice, receipt) {
 	$scope.sendFeedback = function() {
 		$scope.sending = true;
 		$scope.error = {};
+
+		// if feedback.request just says 'Please ', then get rid of it
+		if ($scope.feedback.request.match(feedbackPrefix)) {
+			$scope.feedback.request = null;
+		}
 
 		var errorCallback = function(message) {
 			$scope.sending = false;
@@ -553,7 +555,10 @@ function ReceiptCntl($scope, $location, UtilityService, APIservice, receipt) {
 		receipt.date = UtilityService.dateStringToDate(receipt.date);
 		$scope.cleaner = receipt.cleaner;
 		$scope.list = receipt;
-		$scope.feedback = { _receipt: receipt._id, };
+		$scope.feedback = { 
+			_receipt: receipt._id, 
+			request: feedbackPrefix,
+		};
 
 
 		console.log('list', $scope.list)
