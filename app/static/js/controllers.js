@@ -535,7 +535,7 @@ function ReceiptCntl($scope, $location, UtilityService, APIservice, TranslateSer
 		$scope.error = {};
 
 		// if feedback.request just says 'Please ', then get rid of it
-		if ($scope.feedback.request.match(feedbackPrefix)) {
+		if ($scope.feedback.request.match(feedbackPrefix) && $scope.feedback.request.length == feedbackPrefix.length) {
 			$scope.feedback.request = null;
 		}
 
